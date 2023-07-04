@@ -16,6 +16,7 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
 }
 
 function validateInput(testInput) {
+    testInput = testInput.trim();
     if (testInput === '') {
         return ("Empty");
     }
@@ -48,6 +49,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
             return;
         }
 
+    list.style.visibility = "hidden";
     document.getElementById("pilotStatus").innerHTML = `Pilot ${pilot} is ready for launch`;
     document.getElementById("copilotStatus").innerHTML = `Co-pilot ${copilot} is ready for launch`;
     document.getElementById("fuelStatus").innerHTML = `Fuel level high enough for launch`;
@@ -58,7 +60,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     if (fuelLevelLaunchable && cargoLevelLaunchable) {
         document.getElementById("launchStatus").innerHTML = `Shuttle is ready for launch`;
         document.getElementById("launchStatus").style.color = "green";
-        list.style.visibility = "hidden";
+        list.style.visibility = "visible";
     }
 
     if (!fuelLevelLaunchable) {
