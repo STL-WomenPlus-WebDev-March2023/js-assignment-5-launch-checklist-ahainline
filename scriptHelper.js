@@ -28,6 +28,8 @@ function validateInput(testInput) {
 }
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
+    resetLaunchStatus(document, list);
+
     let pilotValid = validateInput(pilot);
     let copilotValid = validateInput(copilot);
     let fuelLevelValid = validateInput(fuelLevel);
@@ -48,16 +50,13 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
             return;
         }
 
-    list.style.visibility = "hidden";
     document.getElementById("pilotStatus").innerHTML = `Pilot ${pilot} is ready for launch`;
     document.getElementById("copilotStatus").innerHTML = `Co-pilot ${copilot} is ready for launch`;
-    document.getElementById("fuelStatus").innerHTML = `Fuel level high enough for launch`;
-    document.getElementById("cargoStatus").innerHTML = `Cargo mass low enough for launch`;
 
     let fuelLevelLaunchable = (Number(fuelLevel) >= 10000);
     let cargoLevelLaunchable = (Number(cargoLevel) <= 10000);
     if (fuelLevelLaunchable && cargoLevelLaunchable) {
-        document.getElementById("launchStatus").innerHTML = `Shuttle is ready for launch`;
+        document.getElementById("launchStatus").innerHTML = `Shuttle is Ready for Launch`;
         document.getElementById("launchStatus").style.color = "green";
         list.style.visibility = "visible";
     }
@@ -75,7 +74,6 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
         document.getElementById("launchStatus").style.color = "red";
         list.style.visibility = "visible";
     }
-
     return;  
 }
 
@@ -93,8 +91,19 @@ function pickPlanet(planets) {
     return planets[choice];
 }
 
+function resetLaunchStatus(document, list) {
+    document.getElementById("launchStatus").innerHTML = `Awaiting Information Before Launch`;
+    document.getElementById("launchStatus").style.color = "black";
+    list.style.visibility = "hidden";
+    document.getElementById("fuelStatus").innerHTML = `Fuel level high enough for launch`;
+    document.getElementById("cargoStatus").innerHTML = `Cargo mass low enough for launch`;
+    document.getElementById("pilotStatus").innerHTML = `Pilot Ready`;
+    document.getElementById("copilotStatus").innerHTML = `Co-pilot Ready`;
+}
+
 module.exports.addDestinationInfo = addDestinationInfo;
 module.exports.validateInput = validateInput;
 module.exports.formSubmission = formSubmission;
 module.exports.pickPlanet = pickPlanet; 
 module.exports.myFetch = myFetch;
+module.exports.resetLaunchStatus = resetLaunchStatus;
