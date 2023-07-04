@@ -39,17 +39,44 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
         fuelLevelValid === "Empty" ||
         cargoLevelValid === "Empty") {
             alert("All fields are required!");
-            event.preventDefault();
+            return;
         }
     if (pilotValid === "Is a Number" ||
         copilotValid === "Is a Number" ||
         fuelLevelValid === "Not a Number" ||
         cargoLevelValid === "Not a Number") {
             alert("Make sure to enter valid information for each field!");
-            event.preventDefault();
+            return;
         }
 
+    document.getElementById("pilotStatus").innerHTML = `Pilot ${pilot} is ready for launch`;
+    document.getElementById("copilotStatus").innerHTML = `Co-pilot ${copilot} is ready for launch`;
+    document.getElementById("fuelStatus").innerHTML = `Fuel level high enough for launch`;
+    document.getElementById("cargoStatus").innerHTML = `Cargo mass low enough for launch`;
 
+    let fuelLevelLaunchable = (Number(fuelLevel) >= 10000);
+    let cargoLevelLaunchable = (Number(cargoLevel) <= 10000);
+    if (fuelLevelLaunchable && cargoLevelLaunchable) {
+        document.getElementById("launchStatus").innerHTML = `Shuttle is ready for launch`;
+        document.getElementById("launchStatus").style.color = "green";
+        list.style.visibility = "hidden";
+    }
+
+    if (!fuelLevelLaunchable) {
+        document.getElementById("fuelStatus").innerHTML = `Fuel level too low for launch`;
+        document.getElementById("launchStatus").innerHTML = `Shuttle Not Ready for Launch`;
+        document.getElementById("launchStatus").style.color = "red";
+        list.style.visibility = "visible";
+    } 
+
+    if (!cargoLevelLaunchable) {
+        document.getElementById("cargoStatus").innerHTML = `Cargo mass too heavy for launch`;
+        document.getElementById("launchStatus").innerHTML = `Shuttle Not Ready for Launch`;
+        document.getElementById("launchStatus").style.color = "red";
+        list.style.visibility = "visible";
+    }
+
+    return;  
 }
 
 async function myFetch() {
