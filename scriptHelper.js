@@ -34,6 +34,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     let copilotValid = validateInput(copilot);
     let fuelLevelValid = validateInput(fuelLevel);
     let cargoLevelValid = validateInput(cargoLevel);
+    let form = document.querySelector("form[data-testid=testForm]");
 
     if (pilotValid === "Empty" ||
         copilotValid === "Empty" ||
@@ -74,6 +75,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
         document.getElementById("launchStatus").style.color = "rgb(199, 37, 78)";
         list.style.visibility = "visible";
     }
+    form.reset();
     return;  
 }
 
